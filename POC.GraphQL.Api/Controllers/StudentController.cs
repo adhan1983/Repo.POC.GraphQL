@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NSwag.Annotations;
-using POC.GraphQL.Service;
 using POC.GraphQL.Service.Dtos;
 using POC.GraphQL.Service.Interfaces.Services;
 using System.Collections.Generic;
@@ -22,11 +21,20 @@ namespace POC.GraphQL.Api.Controllers
         
         [HttpGet]
         [SwaggerResponse(HttpStatusCode.OK, typeof(List<StudentDto>), Description = "The Students")]
-        public async Task<IActionResult> GetCultures()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var studendsDto = await _studentService.GetAllAsync();
+            var studendsDto = await _studentService.GetStudentAllAsync();
             
             return Ok(studendsDto);
+        }
+
+        [HttpGet("id")]
+        [SwaggerResponse(HttpStatusCode.OK, typeof(StudentDto), Description = "The Student")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var studendDto = await _studentService.GetStudentByIdAsync(id);
+
+            return Ok(studendDto);
         }
 
 

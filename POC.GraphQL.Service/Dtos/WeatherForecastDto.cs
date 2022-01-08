@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
-namespace POC.GraphQL.Api
+namespace POC.GraphQL.Service.Dtos
 {
-    public class WeatherForecast
+    public class WeatherForecastDto
     {
         public DateTime Date { get; set; }
 

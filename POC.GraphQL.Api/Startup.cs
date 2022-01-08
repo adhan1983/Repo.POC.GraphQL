@@ -1,3 +1,5 @@
+using GraphQL.Server;
+using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using POC.GraphQL.Api.Extensions;
+using POC.GraphQL.Api.GraphQL.GraphQLSchema;
 using POC.GraphQL.Repository.Data.Context;
 
 namespace POC.GraphQL.Api
@@ -23,12 +26,23 @@ namespace POC.GraphQL.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterDependencies();
+
+            #region GraphQL's Requirements
             
+            services.AddScoped<AppSchema>();
+
+            services.AddGraphQL()
+                .AddSystemTextJson()
+                .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped); 
+            
+            #endregion
+
             services.AddDbContext<SchoolContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlConnectionString")));
 
-            services.AddControllers();
-            
+            services.AddControllers()
+                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "POC.GraphQL.Api", Version = "v1" });
@@ -50,6 +64,13 @@ namespace POC.GraphQL.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            #region GraphQL's Requirements
+
+            app.UseGraphQL<AppSchema>();
+            app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions());
+            
+            #endregion
 
             app.UseEndpoints(endpoints =>
             {
