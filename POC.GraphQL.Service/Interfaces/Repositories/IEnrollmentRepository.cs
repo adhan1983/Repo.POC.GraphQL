@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace POC.GraphQL.Service.Interfaces.Repositories
 {
-    public interface IStudentRepository
+    public interface IEnrollmentRepository
     {
-        Task<List<Student>> GetAllStudentAsync();
-
-        Task<Student> GetStudentByIdAsync(int id);
+        Task<List<Enrollment>> GetEnrollmentByStudentIdAsync(IEnumerable<int> studentsId);
     }
 }

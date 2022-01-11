@@ -6,6 +6,8 @@ namespace POC.GraphQL.Service.Interfaces.Services
 {
     public interface IStudentService
     {
-        Task<List<StudentDto>> GetAllAsync();
+        Task<List<StudentDto>> GetStudentAllAsync();
+        
+        Task<StudentDto> GetStudentByIdAsync(int id);
     }
 }

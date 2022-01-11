@@ -13,15 +13,21 @@ namespace POC.GraphQL.Repository.Repositories
 
         public StudentRepository(SchoolContext schollContext) => _schollContext = schollContext;
 
-        public async Task<List<Student>> GetAllAsync()
+        public async Task<List<Student>> GetAllStudentAsync()
         {
             var students = await _schollContext.
-                                    Students.
-                                    Include(x => x.Enrollments).
-                                    ThenInclude((y => y.Course)).
-                                    ToListAsync();
-
+                                            Students.ToListAsync();
+            
             return students;
+        }
+
+        public async Task<Student> GetStudentByIdAsync(int id)
+        {
+            var student = await _schollContext.
+                                Students.
+                                FirstAsync(x => x.ID == id);
+
+            return student;
         }
     }
 }
