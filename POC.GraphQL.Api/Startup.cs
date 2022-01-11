@@ -33,7 +33,8 @@ namespace POC.GraphQL.Api
 
             services.AddGraphQL()
                 .AddSystemTextJson()
-                .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped); 
+                .AddGraphTypes(typeof(AppSchema), ServiceLifetime.Scoped).
+                AddDataLoader(); 
             
             #endregion
 

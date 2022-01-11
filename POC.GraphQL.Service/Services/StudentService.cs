@@ -43,26 +43,7 @@ namespace POC.GraphQL.Service
                 ID = model.ID,
                 FirstMidName = model.FirstMidName,
                 LastName = model.LastName,
-                EnrollmentDate = model.EnrollmentDate,
-                Enrollments =
-                    model.
-                        Enrollments.
-                        Select(
-                            (
-                                modelEnrollment => new EnrollmentDto()
-                                {
-                                    Id = modelEnrollment.EnrollmentID,
-                                    CourseId = modelEnrollment.CourseID,
-                                    StudentId = modelEnrollment.StudentID,
-                                    Course = new CourseDto()
-                                    {
-                                        Id = modelEnrollment.Course.CourseID,
-                                        Title = modelEnrollment.Course.Title
-                                    }
-                                }
-                            )).ToList()
-
-
+                EnrollmentDate = model.EnrollmentDate
             };
         }
 

@@ -16,11 +16,8 @@ namespace POC.GraphQL.Repository.Repositories
         public async Task<List<Student>> GetAllStudentAsync()
         {
             var students = await _schollContext.
-                                            Students.
-                                                Include(x => x.Enrollments).
-                                                ThenInclude((y => y.Course)).
-                                                ToListAsync();
-
+                                            Students.ToListAsync();
+            
             return students;
         }
 
@@ -28,10 +25,8 @@ namespace POC.GraphQL.Repository.Repositories
         {
             var student = await _schollContext.
                                 Students.
-                                    Include(x => x.Enrollments).
-                                    ThenInclude((y => y.Course)).
-                                    FirstAsync(x => x.ID == id);
-            
+                                FirstAsync(x => x.ID == id);
+
             return student;
         }
     }

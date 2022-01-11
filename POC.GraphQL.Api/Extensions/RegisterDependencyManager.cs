@@ -12,8 +12,12 @@ namespace POC.GraphQL.Api.Extensions
         public static void RegisterDependencies(this IServiceCollection services)
         {
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IWeatherForecastService, WeatherForecastService>();
+            services.AddScoped<IEnrollmentService, EnrollmentService>();
+
         }
     }
 }
