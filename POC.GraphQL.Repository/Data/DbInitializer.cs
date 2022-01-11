@@ -1,73 +1,44 @@
 ﻿using POC.GraphQL.Repository.Data.Context;
 using POC.GraphQL.Service.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace POC.GraphQL.Repository.Data
 {
     public static class DbInitializer
     {
+        private static readonly string[] FirstNames = new[]
+        {
+            "Carson", "Meredith", "Arturo", "Gytis", "Yan", "Memphis", "Paredes", "Scheider", "Kevin", "Housin",
+
+            "Adama", "Mabill", "Gil", "Tevez", "Ruan", "Kay", "Steve", "Sancho", "Nado", "Morgan",
+        };
+
+        private static readonly string[] LastNames = new[]
+        {
+            "Alexander", "Alonso", "Anand", "Barzdukas", "Lee", "Li", "Depay", "Wood", "Havest", "Auar",
+
+            "Arnold", "Davies", "Barakee", "Baros", "Hofmman", "Garcia", "OHara", "WoodBurn", "Jean", "Spencer",
+        };
+
+        private static readonly DateTime[] dates = new[]
+        {
+            DateTime.Parse("2005-09-01"),
+            DateTime.Parse("2003-09-01"),
+            DateTime.Parse("2002-09-01"),
+            DateTime.Parse("2002-08-26"),
+            DateTime.Parse("2002-05-18"),
+            DateTime.Parse("2010-07-08"),
+            DateTime.Parse("2019-09-30"),
+            DateTime.Parse("2017-07-17")
+        };
+
         public static void Initialize(SchoolContext context)
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
-            if (context.Students.Any())
-            {
-                return;   // DB has been seeded
-            }
-
-            var students = new Student[]
-            {
-
-                new Student{FirstMidName="Carson",LastName="Alexander",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Meredith",LastName="Alonso",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Arturo",LastName="Anand",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Gytis",LastName="Barzdukas",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Yan",LastName="Li",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Peggy",LastName="Justice",EnrollmentDate=DateTime.Parse("2001-09-01")},
-                new Student{FirstMidName="Laura",LastName="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Nino",LastName="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Jack",LastName="Alexander",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Memphis",LastName="Alonso",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Artu",LastName="Anand",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="hand",LastName="Barzdukas",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Hoops",LastName="Li",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Woods",LastName="Justice",EnrollmentDate=DateTime.Parse("2001-09-01")},
-                new Student{FirstMidName="Steve",LastName="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Morgan",LastName="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Smith",LastName="McLead",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="john",LastName="Lee",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Aphonso",LastName="Davies",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Lewis",LastName="Moods",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Yan",LastName="Lee",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Penny",LastName="Aloud",EnrollmentDate=DateTime.Parse("2001-09-01")},
-                new Student{FirstMidName="Frank",LastName="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Tevez",LastName="Olivetto",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Jackson",LastName="Alex",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Memphis",LastName="Depay",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Mess",LastName="Anand",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Tobb",LastName="Amend",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Ananka",LastName="Grabbs",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="WoodBurn",LastName="Ben",EnrollmentDate=DateTime.Parse("2001-09-01")},
-                new Student{FirstMidName="Philipe",LastName="Norman",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Mufasa",LastName="Kill",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Kevin",LastName="Space",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Lara",LastName="Croff",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Ozuna",LastName="Mizu",EnrollmentDate=DateTime.Parse("2005-09-01")},
-                new Student{FirstMidName="Gueye",LastName="Idrissa",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Loki",LastName="Tiger",EnrollmentDate=DateTime.Parse("2003-09-01")},
-                new Student{FirstMidName="Harvest",LastName="Spencer",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Eliah",LastName="Martel",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                new Student{FirstMidName="Aarons",LastName="Green",EnrollmentDate=DateTime.Parse("2001-09-01")},
-
-
-            };
-            foreach (Student s in students)
-            {
-                context.Students.Add(s);
-            }
-            context.SaveChanges();
+            if (context.Students.Any()) return;
 
             var courses = new Course[]
             {
@@ -80,64 +51,96 @@ namespace POC.GraphQL.Repository.Data
                 new Course{CourseID=2042,Title="Literature",Credits=4}
             };
 
-            foreach (Course c in courses)
+            context.Courses.AddRange(courses);
+
+            var students = new List<Student>();
+
+            var rng = new Random();
+
+            for (int i = 1; i < 10000; i++)
             {
-                context.Courses.Add(c);
+                var student = new Student
+                {
+                    FirstMidName = $"{FirstNames[rng.Next(FirstNames.Length)]} + { i }",
+                    LastName = $"{LastNames[rng.Next(LastNames.Length)]} + { i + 1 }",
+                    EnrollmentDate = dates[rng.Next(dates.Length)],
+                    Enrollments = new List<Enrollment>()
+                };
+
+                var randonCurseId = courses[rng.Next(courses.Length)].CourseID;
+
+                var enrollments = new List<Enrollment>();
+
+                if (randonCurseId == 1050 || randonCurseId == 2042)
+                {
+                    var lst = new List<Enrollment>()
+                    {
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.A
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.B
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.C
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.D
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.F
+                        }
+                    };
+                    enrollments.AddRange(lst);
+
+                }
+                else if(randonCurseId == 3141 || randonCurseId == 2021)
+                {
+                    var lst = new List<Enrollment>()
+                    {
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.C
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.F
+                        }
+                    };
+
+                    enrollments.AddRange(lst);
+                }
+                else
+                {
+                    var lst = new List<Enrollment>()
+                    {
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.B
+                        },
+                        new Enrollment
+                        {
+                            StudentID = student.ID, CourseID = courses[rng.Next(courses.Length)].CourseID, Grade = Grade.D
+                        }
+                    };
+
+                    enrollments.AddRange(lst);
+                }
+
+                student.Enrollments.AddRange(enrollments);
+
+                students.Add(student);
+
+                context.Students.AddRange(students);
             }
+
             context.SaveChanges();
 
-            var enrollments = new Enrollment[]
-            {
-                new Enrollment{StudentID=1,CourseID=1050,Grade=Grade.A},
-                new Enrollment{StudentID=1,CourseID=4022,Grade=Grade.C},
-                new Enrollment{StudentID=1,CourseID=4041,Grade=Grade.B},
-                new Enrollment{StudentID=2,CourseID=1045,Grade=Grade.B},
-                new Enrollment{StudentID=2,CourseID=3141,Grade=Grade.F},
-                new Enrollment{StudentID=2,CourseID=2021,Grade=Grade.F},
-                new Enrollment{StudentID=3,CourseID=1050},
-                new Enrollment{StudentID=4,CourseID=1050},
-                new Enrollment{StudentID=4,CourseID=4022,Grade=Grade.F},
-                new Enrollment{StudentID=5,CourseID=4041,Grade=Grade.C},
-                new Enrollment{StudentID=6,CourseID=1045},
-                new Enrollment{StudentID=7,CourseID=3141,Grade=Grade.A},
-
-                new Enrollment{StudentID=8,CourseID=1050,Grade=Grade.A},
-                new Enrollment{StudentID=9,CourseID=4022,Grade=Grade.C},
-                new Enrollment{StudentID=10,CourseID=4041,Grade=Grade.B},
-                new Enrollment{StudentID=11,CourseID=1045,Grade=Grade.B},
-                new Enrollment{StudentID=12,CourseID=3141,Grade=Grade.F},
-                new Enrollment{StudentID=13,CourseID=2021,Grade=Grade.F},
-                new Enrollment{StudentID=14,CourseID=1050},
-                new Enrollment{StudentID=15,CourseID=1050},
-                new Enrollment{StudentID=16,CourseID=4022,Grade=Grade.F},
-                new Enrollment{StudentID=17,CourseID=4041,Grade=Grade.C},
-                new Enrollment{StudentID=18,CourseID=1045},
-                new Enrollment{StudentID=19,CourseID=3141,Grade=Grade.A},
-
-                new Enrollment{StudentID=19,CourseID=1050,Grade=Grade.A},
-                new Enrollment{StudentID=20,CourseID=4022,Grade=Grade.C},
-                new Enrollment{StudentID=21,CourseID=4041,Grade=Grade.B},
-                new Enrollment{StudentID=22,CourseID=1045,Grade=Grade.B},
-                new Enrollment{StudentID=22,CourseID=3141,Grade=Grade.F},
-                new Enrollment{StudentID=23,CourseID=2021,Grade=Grade.F},
-                new Enrollment{StudentID=23,CourseID=1050},
-                new Enrollment{StudentID=24,CourseID=1050},
-                new Enrollment{StudentID=24,CourseID=4022,Grade=Grade.F},
-                new Enrollment{StudentID=25,CourseID=4041,Grade=Grade.C},
-                new Enrollment{StudentID=26,CourseID=1045},
-                new Enrollment{StudentID=27,CourseID=3141,Grade=Grade.A},
-
-                new Enrollment{StudentID=28,CourseID=4022,Grade=Grade.F},
-                new Enrollment{StudentID=29,CourseID=4041,Grade=Grade.C},
-                new Enrollment{StudentID=30,CourseID=1045},
-                new Enrollment{StudentID=31,CourseID=3141,Grade=Grade.A},
-
-            };
-            foreach (Enrollment e in enrollments)
-            {
-                context.Enrollments.Add(e);
-            }
-            context.SaveChanges();
         }
     }
 }
