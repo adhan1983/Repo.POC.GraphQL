@@ -22,6 +22,11 @@ namespace POC.GraphQL.Repository.Data
             "Arnold", "Davies", "Barakee", "Baros", "Hofmman", "Garcia", "OHara", "WoodBurn", "Jean", "Spencer",
         };
 
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching",
+        };
+
         private static readonly DateTime[] dates = new[]
         {
             DateTime.Parse("2005-09-01"),
@@ -38,8 +43,36 @@ namespace POC.GraphQL.Repository.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Students.Any()) return;
+            if (context.Students.Any())
+                return;
+            else
+                StudentInitializer(context);
 
+            if (context.WeatherForecast.Any())
+                return;
+            else
+                WeatherForecastInitializer(context);
+
+
+            context.SaveChanges();
+
+        }
+
+        private static void WeatherForecastInitializer(SchoolContext context) 
+        {
+            var rng = new Random();
+            var weather =  Enumerable.Range(1, 1000).Select(index => new WeatherForecast()
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            }).ToList();
+
+            context.WeatherForecast.AddRange(weather);
+        }
+
+        private static void StudentInitializer(SchoolContext context) 
+        {
             var courses = new Course[]
             {
                 new Course{CourseID=1050,Title="Chemistry",Credits=3},
@@ -99,7 +132,7 @@ namespace POC.GraphQL.Repository.Data
                     enrollments.AddRange(lst);
 
                 }
-                else if(randonCurseId == 3141 || randonCurseId == 2021)
+                else if (randonCurseId == 3141 || randonCurseId == 2021)
                 {
                     var lst = new List<Enrollment>()
                     {
@@ -138,9 +171,6 @@ namespace POC.GraphQL.Repository.Data
 
                 context.Students.AddRange(students);
             }
-
-            context.SaveChanges();
-
         }
     }
 }
