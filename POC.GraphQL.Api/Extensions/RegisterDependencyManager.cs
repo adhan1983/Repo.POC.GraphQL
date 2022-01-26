@@ -13,10 +13,13 @@ namespace POC.GraphQL.Api.Extensions
         {
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+            services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
 
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<IWeatherForecastService, WeatherForecastService>();
             services.AddScoped<IEnrollmentService, EnrollmentService>();
+
+            
 
         }
     }

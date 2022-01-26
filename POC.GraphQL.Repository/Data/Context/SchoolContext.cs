@@ -13,6 +13,8 @@ namespace POC.GraphQL.Repository.Data.Context
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<WeatherForecast> WeatherForecast { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +22,7 @@ namespace POC.GraphQL.Repository.Data.Context
             modelBuilder.Entity<Enrollment>().ToTable("Enrollment");
             modelBuilder.Entity<Student>().ToTable("Person");
             modelBuilder.Entity<Person>().ToTable("Person");
+            modelBuilder.Entity<WeatherForecast>().ToTable("WeatherForecast");            
         }
     }
 }

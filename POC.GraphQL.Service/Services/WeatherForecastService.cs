@@ -1,28 +1,36 @@
 ﻿using POC.GraphQL.Service.Dtos;
+using POC.GraphQL.Service.Interfaces.Repositories;
 using POC.GraphQL.Service.Interfaces.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace POC.GraphQL.Service.Services
 {
     public class WeatherForecastService : IWeatherForecastService
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching",
-        };
 
-        public List<WeatherForecastDto> GetAllWeatherForecastAsync()
+        private readonly IWeatherForecastRepository _weatherForecastRepository;
+
+        
+        public WeatherForecastService(IWeatherForecastRepository weatherForecastRepository) => _weatherForecastRepository = weatherForecastRepository;        
+
+        public async Task<List<WeatherForecastDto>> GetAllWeatherForecastAsync()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 1000).Select(index => new WeatherForecastDto()
+            var models = await _weatherForecastRepository.GetAllWeatherForecastAsync();
+
+            var dtos = models.
+                Select(model => 
+                new WeatherForecastDto 
                 {
-                    Date = DateTime.Now.AddDays(index),
-                    TemperatureC = rng.Next(-20, 55),
-                    Summary = Summaries[rng.Next(Summaries.Length)]
-                })
-                .ToList();
+                    ID = model.ID,
+                    Date = model.Date,
+                    Summary = model.Summary,
+                    TemperatureC = model.TemperatureC,
+                    TemperatureF = model.TemperatureF
+                }).ToList();
+
+            return dtos;
         }
     }
 }
