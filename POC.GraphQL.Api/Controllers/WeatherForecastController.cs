@@ -23,9 +23,11 @@ namespace POC.GraphQL.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_weatherForecastService.GetAllWeatherForecastAsync());
+            var weathers = await _weatherForecastService.GetAllWeatherForecastAsync();
+            
+            return Ok(weathers);
         }
     }
 }
